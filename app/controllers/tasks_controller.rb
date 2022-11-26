@@ -1,9 +1,11 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user!
+  before_action :require_permission, only: %i[show edit update destroy]
   before_action :set_task, only: %i[ show edit update destroy ]
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks.all
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -12,7 +14,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    @task = Task.new
+    @task = current_user.tasks.new
   end
 
   # GET /tasks/1/edit
@@ -21,7 +23,8 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
+    @task.status = 'todo'
 
     respond_to do |format|
       if @task.save
@@ -66,5 +69,11 @@ class TasksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def task_params
       params.require(:task).permit(:name, :status, :priority, :list_id)
+    end
+
+    def require_permission
+      if Task.find(params[:id]).user != current_user
+        redirect_to tasks_path, flash: { error: "You do not have permission to do that." }
+      end
     end
 end
