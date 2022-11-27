@@ -1,7 +1,135 @@
-<p id="notice"><%= notice %></p>
+<% @lists.each do |list| %>
+  
+  <div class="row m-5 rounded p-5" style="background: #FFF;">
+    <h1><%= list.name %></h1> 
+    <div>
+      <%= link_to edit_list_path(list) do %>
+        <i class="fa fa-pen-to-square fa-xl p-1" style="color: #2C1A55"></i>
+      <% end %>
+      <%= link_to list, method: :delete, data: { confirm: "Are you sure delete '#{list.name}?'" } do %>
+        <i class="fa fa-trash fa-xl p-1" style="color: #2C1A55"></i>
+      <% end %>  
+    </div>
+    <div class="col-sm-4 mt-5">
+      <div class="card">
+        <div class="card-header" style="background: #FF700A;">To do</div>
+        <div class="card-body">
+          <% list.tasks.where(status: "todo").each do |task| %>
+            
+            <div class="card <%='card-'+task.priority%>">
+              <div class="card-body">
+                <h5 class="card-title"><%= task.name %></h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  Priority: 
+                  <% if task.priority.eql? 'high' %>
+                    <span class="badge text-bg-danger"><%= task.priority %></span>
+                  <% elsif task.priority.eql? 'media' %>
+                    <span class="badge text-bg-warning"><%= task.priority %></span>
+                  <% else %>
+                    <span class="badge text-bg-success"><%= task.priority %></span>
+                  <% end %>
+                </h6>
+                <p class="card-text"><%= task.description %></p>
+                <%= link_to 'Start Task', update_status_task_path(task, status: 'progress'), method: :patch %>
+              </div>
+              <div class="card-footer text-muted">
+                <%= link_to edit_task_path(task) do %>
+                  <i class="fa fa-pen-to-square fa-xl p-1" style="color: #2C1A55"></i>
+                <% end %>
+                <%= link_to task, method: :delete, data: { confirm: "Are you sure delete '#{task.name}'?"} do %>
+                  <i class="fa fa-trash fa-xl p-1" style="color: #2C1A55"></i>
+                <% end %>  
+              </div>
+            </div>          
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-sm-4 mt-5">
+      <div class="card">
+        <div class="card-header" style="background: #FF700A;">In Progress</div>
+        <div class="card-body">
+          <% list.tasks.where(status: "progress").each do |task| %>
+            
+            <div class="card <%='card-'+task.priority%>">
+              <div class="card-body">
+                <h5 class="card-title"><%= task.name %></h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  Priority: 
+                  <% if task.priority.eql? 'high' %>
+                    <span class="badge text-bg-danger"><%= task.priority %></span>
+                  <% elsif task.priority.eql? 'medium' %>
+                    <span class="badge text-bg-warning"><%= task.priority %></span>
+                  <% else %>
+                    <span class="badge text-bg-success"><%= task.priority %></span>
+                  <% end %>
+                </h6>
+                <p class="card-text"><%= task.description %></p>
+                <%= link_to 'Finish Task', update_status_task_path(task, status: 'done'), method: :patch %>
+              </div>
+              <div class="card-footer text-muted">
+                <%= link_to edit_task_path(task) do %>
+                  <i class="fa fa-pen-to-square fa-xl p-1" style="color: #2C1A55"></i>
+                <% end %>
+                <%= link_to task, method: :delete, data: { confirm: "Are you sure delete '#{task.name}'?" } do %>
+                  <i class="fa fa-trash fa-xl p-1" style="color: #2C1A55"></i>
+                <% end %>  
+              </div>
+            </div>          
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="col-sm-4 mt-5">
+      <div class="card">
+        <div class="card-header" style="background: #FF700A;">Done</div>
+          <div class="card-body">
+            <% list.tasks.where(status: "done").each do |task| %>
+            
+            <div class="card <%='card-'+task.priority%>">
+              <div class="card-body">
+                <h5 class="card-title"><%= task.name %></h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  Priority: 
+                  <% if task.priority.eql? 'high' %>
+                    <span class="badge text-bg-danger"><%= task.priority %></span>
+                  <% elsif task.priority.eql? 'medium' %>
+                    <span class="badge text-bg-warning"><%= task.priority %></span>
+                  <% else %>
+                    <span class="badge text-bg-success"><%= task.priority %></span>
+                  <% end %>
+                </h6>
+                <p class="card-text"><%= task.description %></p>
+                <h6>Done <i class="fa-solid fa-check" style="color: #198754"></i></h6>
+              </div>
+              <div class="card-footer text-muted">
+                <%= link_to edit_task_path(task) do %>
+                  <i class="fa fa-pen-to-square fa-xl p-1" style="color: #2C1A55"></i>
+                <% end %>
+                <%= link_to task, method: :delete, data: { confirm: "Are you sure delete '#{task.name}'?" } do %>
+                  <i class="fa fa-trash fa-xl p-1" style="color: #2C1A55"></i>
+                <% end %>  
+              </div>
+            </div>
+                      
+
+            <% end %>
+          </div>
+        </div>
+    </div>
+  </div>
+
+<% end %>
+
+
+
 
 <h1>Lists</h1>
-
 <table>
   <thead>
     <tr>

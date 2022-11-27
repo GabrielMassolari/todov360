@@ -1,6 +1,7 @@
 <%= simple_form_for task do |f| %>
   <%= f.input :name %>
-  <%= f.input :priority, collection: [['Alta', 'alta'], ['Media', 'media'], ['Baixa', 'baixa']] %>
+  <%= f.input :description, input_html: { rows: 3 } %>
+  <%= f.input :priority, collection: [['High', 'high'], ['Medium', 'medium'], ['Low', 'low']] %>
   <%= f.association :list, collection: current_user.lists.all%>
   <%= f.button :submit %>
 <% end %>

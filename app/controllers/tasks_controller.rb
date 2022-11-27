@@ -1,11 +1,17 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :require_permission, only: %i[show edit update destroy]
+  before_action :require_permission, only: %i[show edit update destroy update_status]
   before_action :set_task, only: %i[ show edit update destroy ]
 
   # GET /tasks or /tasks.json
   def index
     @tasks = current_user.tasks.all
+  end
+
+  def update_status
+    @task = Task.find(params[:id])
+    @task.update(status: params[:status])
+    redirect_to root_path, notice: "Status changed to #{@task.status}"
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -68,7 +74,7 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:name, :status, :priority, :list_id)
+      params.require(:task).permit(:name, :status, :priority, :list_id, :description)
     end
 
     def require_permission
