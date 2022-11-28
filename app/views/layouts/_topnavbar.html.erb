@@ -1,33 +1,36 @@
 <nav class="navbar navbar-expand-lg py-4 nav-pd-20">
     <div class="container-fluid">
-        <a class="navbar-brand pl-10" href="#">
+        <%= link_to root_path do %>
             <img src="https://virtual360.io/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2020/04/Logo-Baixa.png.webp" style="max-width: 65%;" alt="Logo v360">
-        </a>
+        <% end %>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse nav-text" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active nav-text" aria-current="page" href="#">List</a>
+                    <%= link_to 'New List', new_list_path, class: "nav-link active nav-text" %>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active nav-text" aria-current="page" href="#">Task</a>
+                    <%= link_to 'New Task', new_task_path, class: "nav-link active nav-text" %>
+                </li>
+                <li class="nav-item">
+                    <%= link_to 'All Tasks', tasks_path, class: "nav-link active nav-text" %>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active nav-text" href="#">Dashboard</a>
                 </li>
             </ul>
-            <li class="nav-item dropdown d-flex">
+            <li class="nav-item dropdown d-flex nav-user">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <% if user_signed_in? %>
                         <%= current_user.email %>
                     <% end %>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">LINK TO EDIT</a></li>
+                    <li><%= link_to 'Edit User', edit_user_registration_path, class:"dropdown-item" %></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">LINK TO SIGNOUT</a></li>
+                    <li><%= link_to 'Logout', destroy_user_session_path, class:"dropdown-item", method: :delete %></li>
                 </ul>
             </li>
         </div>

@@ -19,6 +19,7 @@ body{
     position: relative;
     top: 50%;
     left: 50%;
+    width: 25%!important;
 }
 
 .h1-logo {
@@ -114,19 +115,28 @@ body{
 .nav-text {
   color: #fff !important;
   font-size: 1.5rem !important;
+  border-left: 2px solid #fff;
+}
+
+.nav-user {
+  color: #fff !important;
+  font-size: 1.5rem !important;
 }
 
 .card-low {
     border-top-color: #198754!important;
     border-top-width: thick!important;
+    margin-bottom: 15px;
 }
 
 .card-medium {
     border-top-color: #FFC107!important;
     border-top-width: thick!important;
+    margin-bottom: 15px;
 }
 
 .card-high {
     border-top-color: #DC3545!important;
     border-top-width: thick!important;
+    margin-bottom: 15px;
 }

@@ -1,4 +1,5 @@
 class List < ApplicationRecord
-  has_many :tasks
+  validates :name, presence: true
+  has_many :tasks, dependent: :restrict_with_error
   belongs_to :user
 end

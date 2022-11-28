@@ -4,5 +4,5 @@
   <%= f.input :priority, collection: [['High', 'high'], ['Medium', 'medium'], ['Low', 'low']] %>
   <%= f.input :status, collection: [['ToDo', 'todo'], ['Progress', 'progress'], ['Done', 'done']] %>
   <%= f.association :list, collection: current_user.lists.all%>
-  <%= f.button :submit %>
+  <%= f.button :submit, class: 'btn btn-lg mb-3 mt-3 button-login' %>
 <% end %>

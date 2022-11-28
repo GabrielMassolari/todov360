@@ -27,7 +27,7 @@ class ListsController < ApplicationController
 
     respond_to do |format|
       if @list.save
-        format.html { redirect_to list_url(@list), notice: "List was successfully created." }
+        format.html { redirect_to root_path, notice: "List was successfully created." }
         format.json { render :show, status: :created, location: @list }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +40,7 @@ class ListsController < ApplicationController
   def update
     respond_to do |format|
       if @list.update(list_params)
-        format.html { redirect_to list_url(@list), notice: "List was successfully updated." }
+        format.html { redirect_to root_path, notice: "List was successfully updated." }
         format.json { render :show, status: :ok, location: @list }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,11 +51,14 @@ class ListsController < ApplicationController
 
   # DELETE /lists/1 or /lists/1.json
   def destroy
-    @list.destroy
-
     respond_to do |format|
-      format.html { redirect_to lists_url, notice: "List was successfully destroyed." }
-      format.json { head :no_content }
+      if @list.destroy
+        format.html { redirect_to root_path, notice: "List was successfully destroyed." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to root_path, alert: @list.errors.messages[:base][0] }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -72,7 +75,7 @@ class ListsController < ApplicationController
 
     def require_permission
       if List.find(params[:id]).user != current_user
-        redirect_to lists_path, flash: { error: "You do not have permission to do that." }
+        redirect_to root_path, alert: "You don't have permission to do that."
       end
     end
 end
