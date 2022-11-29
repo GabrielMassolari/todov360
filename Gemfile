@@ -55,3 +55,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "simple_form", "~> 5.1"
 
 gem "devise", "~> 4.8"
+
+gem "chartkick", "~> 4.2"
+
+gem "groupdate", "~> 6.1"

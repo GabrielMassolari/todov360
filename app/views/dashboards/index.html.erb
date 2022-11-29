@@ -1,0 +1,30 @@
+<div class="row m-5 rounded p-5" style="background: #FFF;">
+  <h1>Dashboard</h1>
+  <hr>
+  <div class="container">
+    <div class="row justify-content-md-center">
+        <div class="card text-center card-info m-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Lists <i class="fa-solid fa-table-list"></i></h5>
+                <hr>
+                <h5 class="card-text"><%= @lists.count %> Lists</h5>
+            </div>
+        </div>    
+        <div class="card text-center card-info m-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Tasks <i class="fa-solid fa-list-check"></i></h5>
+                <hr>
+                <h5 class="card-text"><%= @tasks.count %> Tasks</h5>
+            </div>
+        </div>            
+
+    </div>
+  </div>
+  <h2>Tasks per day</h2>
+  <hr>
+  <%= line_chart @tasks.group_by_day(:created_at).count,  colors: ["#FF700A"]%>
+  <h2>Priority distribution</h2>
+  <hr>
+  <%= pie_chart @tasks.group(:priority).count %>
+  
+</div>
