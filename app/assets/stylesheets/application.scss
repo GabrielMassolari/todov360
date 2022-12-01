@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+
+ body{
+     overflow-x: hidden;
+     font-weight: 400 !important;
+     background-color: #f1f2f3 !important;
+ }
